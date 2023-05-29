@@ -331,6 +331,9 @@ class DataTrainingArguments:
     train_file: Optional[str] = field(
         default='train.json', metadata={"help": "The dir of the dataset to use."}
     )
+    test_file: Optional[str] = field(
+        default='test.json', metadata={"help": "The dir of the dataset to use."}
+    )
     question_column_name: Optional[str] = field(
         default='question', metadata={"help": "The column name of text to input in the file (a csv or JSON file)."}
     )
@@ -437,11 +440,15 @@ def main():
     # Set seed before initializing model.
     set_seed(training_args.seed)
 
-    data_files = {'train': os.path.join(data_args.data_dir, data_args.train_file),
-                  'validation': os.path.join(data_args.data_dir, "valid.json")}
+    data_files = {}
+    if training_args.do_train:
+        data_files = {'train': os.path.join(data_args.data_dir, data_args.train_file),
+                      'validation': os.path.join(data_args.data_dir, "valid.json")}
     if training_args.do_predict:
         data_files['test'] = os.path.join(data_args.data_dir, "test.json")
 
+    assert len(data_files) > 0
+    
     raw_datasets = load_dataset('json', field='data', data_files=data_files)
 
     question_column_name = data_args.question_column_name

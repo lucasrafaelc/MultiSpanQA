@@ -29,6 +29,7 @@ python run_tagger.py \
     --model_name_or_path bert-base-uncased \
     --data_dir ../data/MultiSpanQA_data \
     --output_dir ../output \
+    --test_file ../data/test_mpqa.json \
     --overwrite_output_dir \
     --overwrite_cache \
     --do_train \
