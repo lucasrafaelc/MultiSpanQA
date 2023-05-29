@@ -445,10 +445,10 @@ def main():
         data_files = {'train': os.path.join(data_args.data_dir, data_args.train_file),
                       'validation': os.path.join(data_args.data_dir, "valid.json")}
     if training_args.do_predict:
-        data_files['test'] = os.path.join(data_args.data_dir, "test.json")
+        data_files['test'] = os.path.join(data_args.data_dir, data_args.test_file)
 
     assert len(data_files) > 0
-    
+
     raw_datasets = load_dataset('json', field='data', data_files=data_files)
 
     question_column_name = data_args.question_column_name
