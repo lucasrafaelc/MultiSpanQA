@@ -250,6 +250,8 @@ def postprocess_tagger_predictions(
         context = example["context"]
         for i in ignored_index[::-1]:
             context = context[:i] + context[i+1:]
+        if len(context) != len(valid_labels):
+            print(f"Tamanho do Contexto: {len(context)}. Tamanho dos labels válidos: {len(valid_labels)}")
         assert len(context) == len(valid_labels)
 
         predict_entities = get_entities(valid_labels, context)
