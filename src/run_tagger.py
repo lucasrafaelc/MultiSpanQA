@@ -256,7 +256,9 @@ def postprocess_tagger_predictions(
 
         predict_entities = get_entities(valid_labels, context)
         predictions = [x[0] for x in predict_entities]
-        all_predictions[example["id"]] = predictions
+        span_preds = [x[1] + ":" + x[2] for x in predict_entities]
+
+        all_predictions[example["id"]] = {"predictions" : predictions, "spans": span_preds}
 
         all_ids.append(example["id"])
         all_valid_logits.append(valid_logits)
